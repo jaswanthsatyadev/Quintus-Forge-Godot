@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://dsd33eba3erp3"]
+[gd_scene load_steps=22 format=3 uid="uid://dsd33eba3erp3"]
 
 [ext_resource type="Script" path="res://Scripts/character_body_2d.gd" id="1_akw7j"]
 [ext_resource type="Texture2D" uid="uid://citekt16ikfc0" path="res://Assets/Adventurer-1.5/Individual Sprites/adventurer-idle-00.png" id="2_mkodj"]
@@ -10,15 +10,29 @@
 [ext_resource type="Texture2D" uid="uid://t5j1j5wyk7ux" path="res://Assets/Adventurer-1.5/Individual Sprites/adventurer-jump-03.png" id="8_sydun"]
 [ext_resource type="Texture2D" uid="uid://dcjbntffeeng7" path="res://Assets/Adventurer-1.5/Individual Sprites/adventurer-fall-00.png" id="9_1rqer"]
 [ext_resource type="Texture2D" uid="uid://dqm5w26xxjel0" path="res://Assets/Adventurer-1.5/Individual Sprites/adventurer-fall-01.png" id="10_6s3an"]
+[ext_resource type="Texture2D" uid="uid://b1tebedjvaieq" path="res://Assets/Adventurer-1.5/Individual Sprites/adventurer-smrslt-01.png" id="11_6ruhv"]
 [ext_resource type="Texture2D" uid="uid://b8gkcgnjxmaqs" path="res://Assets/Adventurer-1.5/Individual Sprites/adventurer-run-00.png" id="11_ndl27"]
 [ext_resource type="Texture2D" uid="uid://cdcfm64ade8kb" path="res://Assets/Adventurer-1.5/Individual Sprites/adventurer-run-01.png" id="12_sdxhu"]
+[ext_resource type="Texture2D" uid="uid://diy5xe8ibob6s" path="res://Assets/Adventurer-1.5/Individual Sprites/adventurer-smrslt-02.png" id="12_winnq"]
 [ext_resource type="Texture2D" uid="uid://bv6bkqluuhed2" path="res://Assets/Adventurer-1.5/Individual Sprites/adventurer-run-02.png" id="13_8nkaj"]
+[ext_resource type="Texture2D" uid="uid://cojfibitncsuv" path="res://Assets/Adventurer-1.5/Individual Sprites/adventurer-smrslt-03.png" id="13_cr5fn"]
 [ext_resource type="Texture2D" uid="uid://dkhku7dycxw4t" path="res://Assets/Adventurer-1.5/Individual Sprites/adventurer-run-03.png" id="14_2gwjp"]
 [ext_resource type="Texture2D" uid="uid://xth7tv6ih7jj" path="res://Assets/Adventurer-1.5/Individual Sprites/adventurer-run-04.png" id="15_tvfow"]
 [ext_resource type="Texture2D" uid="uid://beihmqqlw070y" path="res://Assets/Adventurer-1.5/Individual Sprites/adventurer-run-05.png" id="16_end64"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_gdgvt"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_1rqer")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_6s3an")
+}],
+"loop": true,
+"name": &"falling",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_mkodj")
@@ -31,7 +45,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle",
-"speed": 6.0
+"speed": 7.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -45,6 +59,15 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("8_sydun")
+}, {
+"duration": 0.6,
+"texture": ExtResource("11_6ruhv")
+}, {
+"duration": 0.6,
+"texture": ExtResource("12_winnq")
+}, {
+"duration": 0.6,
+"texture": ExtResource("13_cr5fn")
 }, {
 "duration": 1.0,
 "texture": ExtResource("9_1rqer")
@@ -82,16 +105,17 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yikiy"]
 radius = 5.0
+height = 24.0
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 script = ExtResource("1_akw7j")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_gdgvt")
-animation = &"idle"
+animation = &"jumping"
 autoplay = "idle"
-frame_progress = 0.840989
+frame_progress = 0.932603
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1, 3)
+position = Vector2(0, 2)
 shape = SubResource("CapsuleShape2D_yikiy")
