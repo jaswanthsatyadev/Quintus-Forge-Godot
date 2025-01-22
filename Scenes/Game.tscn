@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bx5fxfaxvuwl6"]
+[gd_scene load_steps=6 format=3 uid="uid://bx5fxfaxvuwl6"]
 
 [ext_resource type="PackedScene" uid="uid://dsd33eba3erp3" path="res://Scenes/player.tscn" id="1_k8iww"]
 [ext_resource type="Texture2D" uid="uid://dyv8ctwcd0lql" path="res://Assets/Legacy-Dungeon_V0.2_vacaroxa/Final/Assets/Assets.png" id="2_svusk"]
@@ -312,19 +312,26 @@ texture = ExtResource("2_svusk")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_53800")
 
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_j81ft"]
+
 [node name="Game" type="Node2D"]
+position = Vector2(-4, 6)
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("1_k8iww")]
 position = Vector2(-36, -13)
 
-[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
-position = Vector2(1, -16)
-anchor_mode = 0
-zoom = Vector2(4, 4)
-limit_smoothed = true
-position_smoothing_enabled = true
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(-36, -11)
+zoom = Vector2(5, 5)
 
 [node name="Layer0" type="TileMapLayer" parent="."]
 use_parent_material = true
 position = Vector2(23, 14)
 tile_set = SubResource("TileSet_48t3w")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(-123, -118)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(86, 129)
+shape = SubResource("WorldBoundaryShape2D_j81ft")
