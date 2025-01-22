@@ -21,6 +21,6 @@ position_smoothing_enabled = true
 physics_material_override = SubResource("PhysicsMaterial_jvk5q")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(1, 5)
+position = Vector2(4, 24)
 shape = SubResource("WorldBoundaryShape2D_8fv8n")
 debug_color = Color(0.898696, 0.0530184, 0.750047, 0.42)
