@@ -1,4 +1,4 @@
-[gd_scene load_steps=196 format=3 uid="uid://d4kjbkwlsvd8o"]
+[gd_scene load_steps=196 format=3 uid="uid://37psd0g73mde"]
 
 [ext_resource type="Texture2D" uid="uid://b4v2ootk0ivqw" path="res://Assets/Necromancer/Necromancer/Attack/spr_NecromancerAttackWithEffect_strip47.png" id="1_wuv65"]
 [ext_resource type="Texture2D" uid="uid://b6wp5ot2kto5u" path="res://Assets/Necromancer/Necromancer/Death/spr_NecromancerDeath_strip52.png" id="2_q6egg"]
@@ -1360,6 +1360,6 @@ animations = [{
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_rvqp0")
-animation = &"enemy span"
+animation = &"ideal"
 autoplay = "ideal"
-frame_progress = 0.875413
+frame_progress = 0.864188
