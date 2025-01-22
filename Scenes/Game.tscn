@@ -318,6 +318,7 @@ position = Vector2(-36, -13)
 
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
 position = Vector2(1, -16)
+anchor_mode = 0
 zoom = Vector2(4, 4)
 limit_smoothed = true
 position_smoothing_enabled = true
