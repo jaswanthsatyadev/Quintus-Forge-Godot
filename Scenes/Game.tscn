@@ -528,8 +528,7 @@ tile_set = SubResource("TileSet_48t3w")
 position = Vector2(-37, -24)
 
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
-position = Vector2(0, 3)
-zoom = Vector2(5, 5)
+
 position_smoothing_enabled = true
 position_smoothing_speed = 8.0
 
