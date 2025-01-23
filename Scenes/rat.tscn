@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://cb4kllfqyjv3r"]
+[gd_scene load_steps=35 format=3 uid="uid://cb4kllfqyjv3r"]
 
 [ext_resource type="Texture2D" uid="uid://cesbyojawh03t" path="res://Assets/Rat/NoneOutlinedRat/rat-attack.png" id="1_upq34"]
 [ext_resource type="Texture2D" uid="uid://dh0amg6b4jnjq" path="res://Assets/Rat/NoneOutlinedRat/rat-death.png" id="2_gjx40"]
@@ -7,56 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://bibwan3lq26e8" path="res://Assets/Rat/NoneOutlinedRat/rat-run.png" id="5_4q5y3"]
 
 [sub_resource type="GDScript" id="GDScript_4ua4a"]
-<<<<<<< Updated upstream
-script/source = "extends CharacterBody2D
-
-
-const speed = 50
-var is_rat_chase : bool 
-var health = 80
-var health_max = 80 
-var health_min = 0
-var dead: bool = false
-var taking_damage: bool = false
-var damage_to_death = 20
-var is_dealing_damage: bool = false
-
-var dir: Vector2
-const gravity = 900
-var knockback_force = 200
-var is_roaming: bool = true
-
-func _ready():
-	is_rat_chase = false
-
-func choose(array):
-	array.shuffle()
-	return array.front()
-	
-func _on_timer_timeout():
-	$Timer.wait_time = choose([1.5,2,2.5])
-	if !is_rat_chase:
-		dir = choose([Vector2.RIGHT,Vector2.LEFT])
-		
-		
-	
-func _process(delta):
-	if !is_on_floor():
-		velocity.y += gravity*delta			
-		
-	move(delta)
-	move_and_slide()
-	
-func move(delta):
-	if !dead:
-		if !is_rat_chase:
-			velocity += dir*speed*delta
-		is_roaming = true
-	elif dead:
-		velocity.x = 0
-"
-=======
->>>>>>> Stashed changes
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y6nd5"]
 atlas = ExtResource("1_upq34")
@@ -265,13 +215,10 @@ animations = [{
 radius = 5.99909
 height = 28.0306
 
-<<<<<<< Updated upstream
-=======
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_et2kw"]
 radius = 7.99298
 height = 27.9965
 
->>>>>>> Stashed changes
 [node name="rat" type="CharacterBody2D"]
 script = SubResource("GDScript_4ua4a")
 
@@ -287,12 +234,6 @@ position = Vector2(-4, 10)
 rotation = 1.58825
 shape = SubResource("CapsuleShape2D_k38hd")
 
-<<<<<<< Updated upstream
-[node name="Timer" type="Timer" parent="."]
-autostart = true
-
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
-=======
 [node name="hitbox" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
@@ -302,4 +243,3 @@ shape = SubResource("CapsuleShape2D_et2kw")
 debug_color = Color(0.794024, 0.376812, 0.526766, 0.42)
 
 [node name="detectionarea" type="Area2D" parent="."]
->>>>>>> Stashed changes
