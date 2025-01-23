@@ -11,13 +11,13 @@ config_version=5
 [application]
 
 config/name="Quintus-Forge"
-run/main_scene="res://Scenes/Game.tscn"
+run/main_scene="res://Scenes/level_1.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-globalvars="*res://Scripts/globalvars.gd"
+Game="*res://Scripts/Game.gd"
 
 [input]
 

@@ -1,52 +1,52 @@
 extends CharacterBody2D
 
-const speed = 50
-var is_rat_chase : bool 
-var health = 80
-var health_max = 80 
-var health_min = 0
-var dead: bool = false
-var taking_damage: bool = false
-var damage_to_deat = 20
-var is_dealing_damage: bool = false
-
-var dir: Vector2
-const gravity = 900
-var knockback_force = 200
-var is_roaming: bool = true
+var SPEED = 50
+var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+var player
+var chase = false
 
 func _ready():
-	is_rat_chase = false
-
-func choose(array):
-	array.shuffle()
-	return array.front()
-	
-func _on_timer_timeout():
-	$Timer.wait_time = choose([1.5,2,2.5])
-	if !is_rat_chase:
-		dir = choose([Vector2.RIGHT,Vector2.LEFT])
-		print(dir)
-		
-	
-func _process(delta):
-	if !is_on_floor():
-		velocity.y += gravity*delta			
+	get_node("AnimatedSprite2D").play("Idle")
+func _physics_process(delta):
+	#Gravity for Frog
+	velocity.y += gravity * delta
+	if chase == true:
+		if get_node("AnimatedSprite2D").animation != "Death":
+			get_node("AnimatedSprite2D").play("Jump")
+		player = get_node("../../Player/Player")
+		var direction = (player.position - self.position).normalized()
+		if direction.x > 0:
+			get_node("AnimatedSprite2D").flip_h = true
+		else:
+			get_node("AnimatedSprite2D").flip_h = false
+		velocity.x = direction.x * SPEED
+	else:
+		if get_node("AnimatedSprite2D").animation != "Death":
+			get_node("AnimatedSprite2D").play("Idle")
 		velocity.x = 0
-	move(delta)
-	handle_animaton()
 	move_and_slide()
 	
-	
-func move(delta):
-	if !dead:
-		if !is_rat_chase:
-			velocity += dir*speed*delta
-		is_roaming = true
-	elif dead:
-		velocity.x = 0
-	
-func handle_animaton():
-	var animated_sprite_2d = $AnimatedSprite2D
-	if !dead and !is_dealing_damage and !taking_damage:
-		animated_sprite_2d.play("running")
+func _on_player_detection_body_entered(body):
+	if body.name == "Player":
+		chase = true
+
+
+func _on_player_detection_body_exited(body):
+	if body.name == "Player":
+		chase = false
+
+
+func _on_player_death_body_entered(body):
+	if body.name == "Player":
+		death()
+func _on_player_collison_body_entered(body):
+	if body.name == "Player":
+		Game.playerHP -= 3
+		death()
+func death():
+	Game.Gold += 5
+	#Utils.saveGame()
+	chase = false
+	get_node("AnimatedSprite2D").play("Death")
+	await get_node("AnimatedSprite2D").animation_finished
+	self.queue_free()
