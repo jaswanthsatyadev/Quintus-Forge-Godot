@@ -25,6 +25,7 @@ script = SubResource("GDScript_ltvgu")
 position = Vector2(-50, 32)
 
 [node name="player" parent="." instance=ExtResource("1_k8iww")]
+unique_name_in_owner = true
 position = Vector2(-75, 52)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
