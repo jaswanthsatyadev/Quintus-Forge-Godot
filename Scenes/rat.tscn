@@ -1,11 +1,69 @@
-[gd_scene load_steps=35 format=3 uid="uid://cb4kllfqyjv3r"]
+[gd_scene load_steps=37 format=3 uid="uid://cb4kllfqyjv3r"]
 
 [ext_resource type="Texture2D" uid="uid://cesbyojawh03t" path="res://Assets/Rat/NoneOutlinedRat/rat-attack.png" id="1_upq34"]
-[ext_resource type="Script" path="res://Scripts/rat.gd" id="1_wneps"]
 [ext_resource type="Texture2D" uid="uid://dh0amg6b4jnjq" path="res://Assets/Rat/NoneOutlinedRat/rat-death.png" id="2_gjx40"]
 [ext_resource type="Texture2D" uid="uid://ds28nc2jnek3u" path="res://Assets/Rat/NoneOutlinedRat/rat-hurt.png" id="3_u1ty5"]
 [ext_resource type="Texture2D" uid="uid://do1cv0mo4b6uu" path="res://Assets/Rat/NoneOutlinedRat/rat-idle.png" id="4_q1wow"]
 [ext_resource type="Texture2D" uid="uid://bibwan3lq26e8" path="res://Assets/Rat/NoneOutlinedRat/rat-run.png" id="5_4q5y3"]
+
+[sub_resource type="GDScript" id="GDScript_4ua4a"]
+script/source = "extends CharacterBody2D
+
+var SPEED = 50
+var gravity = ProjectSettings.get_setting(\"physics/2d/default_gravity\")
+var player
+var chase = false
+
+func _ready():
+	get_node(\"AnimatedSprite2D\").play(\"Idle\")
+func _physics_process(delta):
+	#Gravity for Frog
+	velocity.y += gravity * delta
+	if chase == true:
+		if get_node(\"AnimatedSprite2D\").animation != \"Death\":
+			get_node(\"AnimatedSprite2D\").play(\"Jump\")
+		player = get_node(\"../../Player/Player\")
+		var direction = (player.position - self.position).normalized()
+		if direction.x > 0:
+			get_node(\"AnimatedSprite2D\").flip_h = true
+		else:
+			get_node(\"AnimatedSprite2D\").flip_h = false
+		velocity.x = direction.x * SPEED
+	else:
+		if get_node(\"AnimatedSprite2D\").animation != \"Death\":
+			get_node(\"AnimatedSprite2D\").play(\"Idle\")
+		velocity.x = 0
+	move_and_slide()
+	
+func _on_player_detection_body_entered(body):
+	if body.name == \"Player\":
+		chase = true
+
+
+func _on_player_detection_body_exited(body):
+	if body.name == \"Player\":
+		chase = false
+
+
+func _on_player_death_body_entered(body):
+	if body.name == \"Player\":
+		death()
+func _on_player_collison_body_entered(body):
+	if body.name == \"Player\":
+		Game.playerHP -= 3
+		death()
+func death():
+	Game.Gold += 5
+	#Utils.saveGame()
+	chase = false
+	get_node(\"AnimatedSprite2D\").play(\"Death\")
+	await get_node(\"AnimatedSprite2D\").animation_finished
+	self.queue_free()
+"
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_k38hd"]
+radius = 5.99909
+height = 28.0306
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y6nd5"]
 atlas = ExtResource("1_upq34")
@@ -210,34 +268,51 @@ animations = [{
 "speed": 13.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_k38hd"]
-radius = 2.99954
-height = 12.0331
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_et2kw"]
+radius = 51.0251
+height = 280.091
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_uxvxv"]
-radius = 62.2013
+[sub_resource type="CircleShape2D" id="CircleShape2D_hrxie"]
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
-collision_layer = 2
-collision_mask = 2
-script = ExtResource("1_wneps")
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7oaqp"]
+size = Vector2(20, 11)
+
+[node name="rat" type="CharacterBody2D"]
+script = SubResource("GDScript_4ua4a")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-4, 10)
+rotation = 1.58825
+shape = SubResource("CapsuleShape2D_k38hd")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-3, 0)
 sprite_frames = SubResource("SpriteFrames_1ufsl")
-animation = &"idle"
+animation = &"running"
 autoplay = "idle"
-frame_progress = 0.769914
+frame_progress = 0.291891
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-2, 10)
-rotation = 1.58825
-shape = SubResource("CapsuleShape2D_k38hd")
+[node name="PlayerDetection" type="Area2D" parent="."]
 
-[node name="detection area" type="Area2D" parent="."]
-collision_layer = 2
-collision_mask = 2
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetection"]
+position = Vector2(-3, 9)
+rotation = 4.7281
+shape = SubResource("CapsuleShape2D_et2kw")
+debug_color = Color(0.794024, 0.376812, 0.526766, 0.42)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="detection area"]
-position = Vector2(-1, 10)
-shape = SubResource("CircleShape2D_uxvxv")
+[node name="PlayerDeath" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDeath"]
+position = Vector2(-4, 9)
+shape = SubResource("CircleShape2D_hrxie")
+
+[node name="PlayerCollison" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerCollison"]
+position = Vector2(-1, 11)
+shape = SubResource("RectangleShape2D_7oaqp")
+
+[connection signal="body_entered" from="PlayerDetection" to="." method="_on_player_detection_body_entered"]
+[connection signal="body_exited" from="PlayerDetection" to="." method="_on_player_detection_body_exited"]
+[connection signal="body_entered" from="PlayerDeath" to="." method="_on_player_death_body_entered"]
+[connection signal="body_entered" from="PlayerCollison" to="." method="_on_player_collison_body_entered"]
