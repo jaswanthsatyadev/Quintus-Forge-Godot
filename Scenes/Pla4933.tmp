@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://dsd33eba3erp3"]
+[gd_scene load_steps=31 format=3 uid="uid://dsd33eba3erp3"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_akw7j"]
 [ext_resource type="Texture2D" uid="uid://b333oep505jke" path="res://Assets/Adventurer-1.5/Individual Sprites/adventurer-attack1-00.png" id="2_kwb6w"]
@@ -57,7 +57,7 @@ animations = [{
 "texture": ExtResource("6_n4rhl")
 }],
 "loop": true,
-"name": &"attack",
+"name": &"attack1",
 "speed": 10.0
 }, {
 "frames": [{
@@ -159,9 +159,6 @@ animations = [{
 radius = 5.0
 height = 28.0
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gvs6n"]
-radius = 7.0
-
 [node name="player" type="CharacterBody2D"]
 collision_layer = 9
 collision_mask = 9
@@ -171,9 +168,8 @@ script = ExtResource("1_akw7j")
 position = Vector2(-5, 0)
 scale = Vector2(0.979167, 1)
 sprite_frames = SubResource("SpriteFrames_gdgvt")
-animation = &"attack"
+animation = &"jumping"
 autoplay = "idle"
-frame_progress = 0.483096
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-3, 3)
@@ -184,14 +180,3 @@ position = Vector2(-3, 0)
 target_position = Vector2(0, -10)
 collision_mask = 4
 hit_from_inside = true
-
-[node name="playerDamageZone" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="playerDamageZone"]
-position = Vector2(-3, 3)
-shape = SubResource("CapsuleShape2D_gvs6n")
-
-[node name="playerHitBox" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="playerHitBox"]
-position = Vector2(2, -2)
