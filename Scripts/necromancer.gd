@@ -28,8 +28,8 @@ func _process(delta):
 		velocity.y = gravity * delta
 		velocity.x = 0
 	
-	Global.EnemyDamgeAmount = damage_to_deal
-	Global.EnemyDamageZone = $EnemyDealDamageArea
+	Global.BossDamgeAmount = damage_to_deal
+	Global.BossDamageZone = $BossDealDamageArea
 	
 	move(delta)
 	handle_animations()
@@ -44,7 +44,7 @@ func move(delta):
 			dir.x = abs(velocity.x) / velocity.x
 		elif taking_damage:
 			var knockback_dir = position.direction_to(Global.playerBody.position) * knockback_force
-			velocity.x = knockback_dir
+			velocity.x = knockback_dir.x
 		is_roaming = true
 			
 			
