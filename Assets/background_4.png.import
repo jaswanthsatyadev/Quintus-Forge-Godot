@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bqudniijuiivw"
-path="res://.godot/imported/background_4.png-099dea2ed25379fac70ec5e4330d57dc.ctex"
+path="res://.godot/imported/background_4.png-5682e867f5b1bc93c2ecb5c777fed05d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Enjl-Dark Halls Tileset/Enjl-Dark Halls Tileset/background_4.png"
-dest_files=["res://.godot/imported/background_4.png-099dea2ed25379fac70ec5e4330d57dc.ctex"]
+source_file="res://Assets/background_4.png"
+dest_files=["res://.godot/imported/background_4.png-5682e867f5b1bc93c2ecb5c777fed05d.ctex"]
 
 [params]
 

@@ -1,0 +1,56 @@
+[gd_scene load_steps=9 format=3 uid="uid://ct26h1rh6byd7"]
+
+[ext_resource type="Script" path="res://Scripts/chest.gd" id="1_q0pfi"]
+[ext_resource type="Texture2D" uid="uid://dyv8ctwcd0lql" path="res://Assets/Legacy-Dungeon_V0.2_vacaroxa/Final/Assets/Assets.png" id="2_v268d"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_02b4n"]
+atlas = ExtResource("2_v268d")
+region = Rect2(238, 37, 17, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xej7r"]
+atlas = ExtResource("2_v268d")
+region = Rect2(255, 37, 17, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5gi74"]
+atlas = ExtResource("2_v268d")
+region = Rect2(272, 37, 17, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3r0xa"]
+atlas = ExtResource("2_v268d")
+region = Rect2(289, 37, 17, 37)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_eopms"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_02b4n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xej7r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5gi74")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3r0xa")
+}],
+"loop": false,
+"name": &"chest_open",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_beafo"]
+size = Vector2(20, 16)
+
+[node name="chest" type="Area2D"]
+script = ExtResource("1_q0pfi")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_eopms")
+animation = &"chest_open"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 0)
+shape = SubResource("RectangleShape2D_beafo")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
