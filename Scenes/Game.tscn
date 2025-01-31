@@ -25,7 +25,7 @@ script = SubResource("GDScript_ltvgu")
 position = Vector2(-26, -3)
 
 [node name="player" parent="." instance=ExtResource("1_k8iww")]
-position = Vector2(-92, -474)
+position = Vector2(-71, 15)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 zoom = Vector2(4, 4)
