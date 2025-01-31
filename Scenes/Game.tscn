@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://bx5fxfaxvuwl6"]
 
-[ext_resource type="PackedScene" uid="uid://dsd33eba3erp3" path="res://Scenes/player.tscn" id="1_k8iww"]
+[ext_resource type="PackedScene" uid="uid://dsd33eba3erp3" path="res://Scenes/Player.tscn" id="1_k8iww"]
 [ext_resource type="PackedScene" uid="uid://dva4ce6xiu7c1" path="res://Scenes/level_1.tscn" id="2_bgcnc"]
 [ext_resource type="PackedScene" uid="uid://bklfui6elp0k8" path="res://Scenes/spike.tscn" id="3_cu7qn"]
 [ext_resource type="PackedScene" uid="uid://coc4oxy164d0j" path="res://Scenes/necromancer.tscn" id="4_nf02b"]
@@ -22,10 +22,23 @@ position = Vector2(32, 5)
 script = SubResource("GDScript_ltvgu")
 
 [node name="Levels" parent="." instance=ExtResource("2_bgcnc")]
-position = Vector2(-26, -3)
+position = Vector2(-50, 32)
 
 [node name="player" parent="." instance=ExtResource("1_k8iww")]
+<<<<<<< Updated upstream
 position = Vector2(-71, 15)
+=======
+position = Vector2(-75, 52)
+
+[node name="HealthBar" type="ProgressBar" parent="player"]
+offset_left = -129.0
+offset_top = -68.0
+offset_right = -77.0
+offset_bottom = -62.0
+step = 20.0
+rounded = true
+show_percentage = false
+>>>>>>> Stashed changes
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 zoom = Vector2(4, 4)
@@ -38,8 +51,8 @@ position_smoothing_speed = 15.0
 position = Vector2(197, 140)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="spike"]
-position = Vector2(38, 76)
+position = Vector2(2, 110)
 shape = SubResource("WorldBoundaryShape2D_tn467")
 
 [node name="Enemy" parent="." instance=ExtResource("4_nf02b")]
-position = Vector2(371, 34)
+position = Vector2(388, 88)
