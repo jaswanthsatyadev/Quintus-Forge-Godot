@@ -1,10 +1,16 @@
 extends CharacterBody2D
 
+#class initiation 
 class_name Enemy
 
+#vars and constants
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var direction_timer: Timer = $DirectionTimer
+@onready var player_detection_area: Area2D = $"../PlayerDetectionArea"
+@onready var enemy_deal_damage_area: Area2D = $"../EnemyDealDamageArea"
+@onready var player_hit_box: Area2D = $playerHitBox
 
+const CHASE_RANGE = 315
 const SPEED = 30
 var is_chasing_player: bool = true
 
@@ -22,35 +28,46 @@ const gravity = 900
 var knockback_force = -20
 var is_roaming: bool = false
 var player_in_area = false
+var nearby: bool = false
 
 func _process(delta):
 	if !is_on_floor():
 		velocity.y = gravity * delta
 		velocity.x = 0
 	
-	Global.BossDamgeAmount = damage_to_deal
-	Global.BossDamageZone = $BossDealDamageArea
+	Global.EnemyDamgeAmount = damage_to_deal
+	Global.EnemyDamageZone = enemy_deal_damage_area
 	
 	move(delta)
-	handle_animations()
 	move_and_slide()
+
 func move(delta):
 	if !dead:
 		if !is_chasing_player:
 			velocity += dir * SPEED * delta
 		elif is_chasing_player and !taking_damage:
-			var dir_to_player = position.direction_to(Global.playerBody.position) * SPEED
-			velocity.x = dir_to_player.x
-			dir.x = abs(velocity.x) / velocity.x
+			var dir_to_player = position.direction_to(Global.playerBody.global_position)
+			velocity.x = dir_to_player.x * SPEED
+			dir.x = sign(velocity.x)
 		elif taking_damage:
-			var knockback_dir = position.direction_to(Global.playerBody.position) * knockback_force
-			velocity.x = knockback_dir.x
+			var knockback_dir = position.direction_to(Global.playerBody.global_position)
+			var knockback_velocity = knockback_dir * knockback_force
+			velocity.x = knockback_velocity.x
 		is_roaming = true
 			
 			
 	elif dead:
 		velocity.x = 0
-		
+
+
+func _on_player_detection_area_body_entered(body: Node2D) -> void:
+	if body == Global.playerBody:
+		is_chasing_player = true
+
+
+func _on_player_detection_area_body_exited(body: Node2D) -> void:
+	if body != Global.playerBody:
+		is_chasing_player = false
 
 func _on_direction_timer_timeout() -> void:
 	$DirectionTimer.wait_time = choose([1.5,2.0,2.5])
@@ -101,12 +118,3 @@ func take_damage(damage):
 	if health <= health_min:
 		health = health_min
 		dead = true
-
-
-
-func _on_enemy_deal_damage_area_area_entered(area: Area2D) -> void:
-	if area == Global.playerHitBox:
-		is_dealing_damage = true
-		await get_tree().create_timer(1.2).timeout
-		is_dealing_damage = false
-		

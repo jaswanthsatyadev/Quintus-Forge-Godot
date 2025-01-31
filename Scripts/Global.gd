@@ -15,4 +15,4 @@ var EnemyDamageZone: Area2D
 var EnemyDamgeAmount: int
 
 var BossDamageZone: Area2D
-var BossDamageAmount
+var BossDamageAmount: int
